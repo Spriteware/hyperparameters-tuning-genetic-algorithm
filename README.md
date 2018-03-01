@@ -3,6 +3,16 @@
 
 The purpose of this notebook is to make a **simple proof-of-concept** of the ability for a genetic algorithm to automatically **tune the hyperparameters** of a neural network though evolutions. The goal will be to obtain **the best neural network model** that approximates the sin() function.
 
+**Author**: François Andrieux
+
+- https://linkedin.com/in/francois-andrieux
+- https://twitter.com/Spriteware
+- https://github.com/Spriteware
+
+You can get detailed explanations and other experiments on [franpapers.com](https://franpapers.com).    
+   
+
+**Summary**:
 1.  The goal: approximate the sin() function
 2.  Models
 3.  Evolution
@@ -13,14 +23,6 @@ The purpose of this notebook is to make a **simple proof-of-concept** of the abi
 5.  Display the best player in the game
 6.  Analyze how which parameter influences
 
-
-**Author**: François Andrieux
-
-- https://linkedin.com/in/francois-andrieux
-- https://twitter.com/Spriteware
-- https://github.com/Spriteware
-
-You can get detailed explanations and other experiments on [franpapers.com](https://franpapers.com).
 
 
 ```python
@@ -40,7 +42,7 @@ from sklearn import utils
 
 sns.set()
 %matplotlib inline  
-%config InlineBackend.figure_format = "retina"
+# %config InlineBackend.figure_format = "retina"
 ```
 
 ## The goal: approximate the sin() function
@@ -53,7 +55,7 @@ plt.plot(X, Y, ".--");
 ```
 
 
-![png](output_4_0.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_5_0.png)
 
 
 ## Models
@@ -209,17 +211,17 @@ print("training_time", m2.training_time)
 ```
 
 
-![png](output_9_0.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_10_0.png)
 
 
-    training_time 0.7471706867218018
+    training_time 0.738776683807373
     
 
 
-![png](output_9_2.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_10_2.png)
 
 
-    training_time 0.7820770740509033
+    training_time 0.5317940711975098
     
 
 
@@ -236,11 +238,11 @@ plt.show()
 ```
 
 
-![png](output_10_0.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_11_0.png)
 
 
 
-![png](output_10_1.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_11_1.png)
 
 
 Important: do not forget to free the session, if not it will be huge in a while
@@ -355,14 +357,14 @@ print(elite)
 ```
 
 
-![png](output_22_0.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_23_0.png)
 
 
 
-![png](output_22_1.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_23_1.png)
 
 
-    [#17 / gen 2]	score is 0.553698256611824
+    [#48 / gen 8]	score is 0.696196474134922
     
 
 ## Analyze how which parameter influences
@@ -387,21 +389,45 @@ ev.visual_analysis()
 ```
 
 
-![png](output_26_0.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_27_0.png)
 
 
 
-![png](output_26_1.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_27_1.png)
 
 
 
-![png](output_26_2.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_27_2.png)
 
 
 
-![png](output_26_3.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_27_3.png)
 
 
 
-![png](output_26_4.png)
+![png](sine_genetic_approximation_files/sine_genetic_approximation_27_4.png)
 
+
+## Export the notebook
+
+
+```python
+!jupyter nbconvert --to pdf sine_genetic_approximation.ipynb 
+```
+
+    [NbConvertApp] Converting notebook sine_genetic_approximation.ipynb to markdown
+    [NbConvertApp] Support files will be in sine_genetic_approximation_files\
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Making directory sine_genetic_approximation_files
+    [NbConvertApp] Writing 13330 bytes to sine_genetic_approximation.md
+    
