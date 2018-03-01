@@ -3,6 +3,8 @@
 
 The purpose of this notebook is to make a **simple proof-of-concept** of the ability for a genetic algorithm to automatically **tune the hyperparameters** of a neural network though evolutions. The goal will be to obtain **the best neural network model** that approximates the sin() function.
 
+For a more acomplished analysis of the performance of this genetic algorithm, please visit my other work *"Application of a genetic algorithm on a Neural Network using Tensorflow - Malware detection with Machine Learning"*
+
 **Author**: François Andrieux
 
 - https://linkedin.com/in/francois-andrieux
@@ -412,7 +414,8 @@ ev.visual_analysis()
 
 
 ```python
-!jupyter nbconvert --to pdf sine_genetic_approximation.ipynb 
+!jupyter nbconvert --to markdown sine_genetic_approximation.ipynb
+!mv sine_genetic_approximation.md README.md
 ```
 
     [NbConvertApp] Converting notebook sine_genetic_approximation.ipynb to markdown
@@ -429,5 +432,5 @@ ev.visual_analysis()
     [NbConvertApp] Making directory sine_genetic_approximation_files
     [NbConvertApp] Making directory sine_genetic_approximation_files
     [NbConvertApp] Making directory sine_genetic_approximation_files
-    [NbConvertApp] Writing 13330 bytes to sine_genetic_approximation.md
+    [NbConvertApp] Writing 11913 bytes to sine_genetic_approximation.md
     
