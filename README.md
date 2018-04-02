@@ -1,12 +1,18 @@
 
-# Application of a genetic algorithm on a Neural Network using Tensorflow - Malware detection with Machine Learning
+<h1 style="text-align:center; font-size:40px; color:inherit">Application of a genetic algorithm on a Neural Network using Tensorflow<span style="font-size: 25px"> <br/>–<br/>Malware detection with Machine Learning</span></h1>
+
+<p style="text-align:center;"><br/>Author: <strong>François Andrieux</strong></p>
+
+<h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><span><a href="#Import-the-dataset" data-toc-modified-id="Import-the-dataset-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Import the dataset</a></span></li><li><span><a href="#Analysis-of-the-data" data-toc-modified-id="Analysis-of-the-data-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Analysis of the data</a></span></li><li><span><a href="#Cross-validation-datasets-creation" data-toc-modified-id="Cross-validation-datasets-creation-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Cross validation datasets creation</a></span><ul class="toc-item"><li><span><a href="#Analysis-of-the-malware/benign-distribution" data-toc-modified-id="Analysis-of-the-malware/benign-distribution-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Analysis of the malware/benign distribution</a></span></li></ul></li><li><span><a href="#Build-the-model" data-toc-modified-id="Build-the-model-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Build the model</a></span></li><li><span><a href="#The-training-part" data-toc-modified-id="The-training-part-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>The training part</a></span></li><li><span><a href="#Genetic-algorithm-configuration" data-toc-modified-id="Genetic-algorithm-configuration-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Genetic algorithm configuration</a></span><ul class="toc-item"><li><span><a href="#Configure-the-hyperparameters-that-can-be-changed" data-toc-modified-id="Configure-the-hyperparameters-that-can-be-changed-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Configure the hyperparameters that can be changed</a></span></li><li><span><a href="#Configure-the-fitness-function" data-toc-modified-id="Configure-the-fitness-function-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Configure the fitness function</a></span></li><li><span><a href="#Define-the-callback-function" data-toc-modified-id="Define-the-callback-function-6.3"><span class="toc-item-num">6.3&nbsp;&nbsp;</span>Define the callback function</a></span></li></ul></li><li><span><a href="#Launch-the-genetic-evolution" data-toc-modified-id="Launch-the-genetic-evolution-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Launch the genetic evolution</a></span><ul class="toc-item"><li><span><a href="#Create-the-initial-population" data-toc-modified-id="Create-the-initial-population-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Create the initial population</a></span></li><li><span><a href="#Evolve-the-population" data-toc-modified-id="Evolve-the-population-7.2"><span class="toc-item-num">7.2&nbsp;&nbsp;</span>Evolve the population</a></span></li><li><span><a href="#Display-the-best-player-in-the-game" data-toc-modified-id="Display-the-best-player-in-the-game-7.3"><span class="toc-item-num">7.3&nbsp;&nbsp;</span>Display the best player in the game</a></span></li><li><span><a href="#Analyze-how-parameters-influences" data-toc-modified-id="Analyze-how-parameters-influences-7.4"><span class="toc-item-num">7.4&nbsp;&nbsp;</span>Analyze how parameters influences</a></span></li></ul></li><li><span><a href="#Final-training-on-the-entire-dataset" data-toc-modified-id="Final-training-on-the-entire-dataset-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Final training on the entire dataset</a></span><ul class="toc-item"><li><span><a href="#Launch-the-training" data-toc-modified-id="Launch-the-training-8.1"><span class="toc-item-num">8.1&nbsp;&nbsp;</span>Launch the training</a></span></li><li><span><a href="#Analysis-of-the-results" data-toc-modified-id="Analysis-of-the-results-8.2"><span class="toc-item-num">8.2&nbsp;&nbsp;</span>Analysis of the results</a></span></li><li><span><a href="#Limitations-of-the-genetic-evolution" data-toc-modified-id="Limitations-of-the-genetic-evolution-8.3"><span class="toc-item-num">8.3&nbsp;&nbsp;</span>Limitations of the genetic evolution</a></span></li><li><span><a href="#Possible-improvements" data-toc-modified-id="Possible-improvements-8.4"><span class="toc-item-num">8.4&nbsp;&nbsp;</span>Possible improvements</a></span></li></ul></li></ul></div>
+
 The goal of this notebook is to achieve a **classification** in order to **detect Android malwares**. The process will be to feed forward an **Artificial Neural Network** with a pre-processed and clean dataset of Java Bytecode, and predict if it is **benign or not**. 
 
-Then, we apply a **genetic algorithm** with the aim of getting the most optimized parameters for the neural network.
+Then, we apply a **genetic algorithm** with the aim of getting the most optimized parameters for the neural network. The genetic algorithm implementation is located as an external python module in `genev.py`. 
 
 
 ```python
-%reset -f 
+%reset -f # reset all variables
 ```
 
 > **Tensorflow** will be used for building and training the neural network,  
@@ -95,7 +101,7 @@ print("_raw_outputs.shape", _raw_outputs.shape)
     _output_size 2
     _raw_inputs.shape (7707, 5971)
     _raw_outputs.shape (7707, 2)
-
+    
 
 ## Analysis of the data
 Our objective is to get knowledge about the data that we manipulate and, for example, verify that the inputs are **normalized** as well as the outputs. 
@@ -400,7 +406,7 @@ X_train, y_train, X_val, y_val, X_test, y_test = cross_validation_split(X_data, 
     X_train.shape	 (4624, 5971) 	 y_train.shape	 (4624, 2)
     X_val.shape	 (1541, 5971) 	 y_val.shape	 (1541, 2)
     X_test.shape	 (1541, 5971) 	 y_test.shape	 (1541, 2)
-
+    
 
 ### Analysis of the malware/benign distribution
 Now that we have shuffled our data and splitted our data, we need to check that it is correctly distributed:
@@ -484,7 +490,7 @@ plt.show()
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_19_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_21_1.png)
 
 
 Thanks to this histogram, we are now sure that each set is representative of our global data.
@@ -877,7 +883,7 @@ train_losses, val_loss, metrics, t = m1.fit(X_train, y_train, X_val, y_val, X_te
     epoch #960	loss: 0.0099 / 0.0235	acc: 0.97
     epoch #980	loss: 0.0096 / 0.0233	acc: 0.97
     epoch #1000	loss: 0.0093 / 0.0231	acc: 0.97
-
+    
 
 
     <IPython.core.display.Javascript object>
@@ -891,11 +897,11 @@ m1.status
 ```
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_31_0.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_33_0.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_31_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_33_1.png)
 
 
 
@@ -935,8 +941,12 @@ m1.test(X_test, y_test)
 ```
 
 ## Genetic algorithm configuration
+A common solution for tweaking the hyperparameters of a neural network model is to use the grid search (provide some possible values for each parameter and test each possible configuration) but that can be extremely expensive due to the number of combination exponentially increasing when we add parameters. The purpose of a genetic algorithm here is to use a bit of a random to check as many as possible configurations and then to naturally evolve towards the best solution. 
+
+In this sense, the genetic algorithm may not converge towards the absolute perfect solution but it will provide a sufficient good solution pretty quickly given the number of parameters. 
+
 ### Configure the hyperparameters that can be changed
-Each parameters should be associated with a tuple describing the expected value like `(value_type, picking_function)`.
+The idea is not to provide a typical values (like the grid search) but more a possible range of values. The genetic algorithm will handle the correct combination naturally. Each parameters should be associated with a tuple describing the expected value like `(value_type, picking_function)`.
 
 
 ```python
@@ -995,7 +1005,7 @@ def calc_fitness(model):
     return fitness
 ```
 
-The accuracy is the most important component, this is why we set it as emphasized. Also, the goal is to make a distinction between a 0.97 and 0.98 of accuracy. Here's how we do, using the **squared root**:
+The accuracy is the most important component, this is why we set it as emphasized. Also, the goal is to make a distinction between a 0.97 and 0.98 of accuracy. We can use the **squared root**:
 
 
 ```python
@@ -1011,7 +1021,7 @@ plt.plot();
 ```
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_41_0.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_43_0.png)
 
 
 Then we can analyze how much each component of the fitness function was the most taken in account. Taking **m1**, for example:
@@ -1127,7 +1137,7 @@ def callback():
 ```
 
 ## Launch the genetic evolution 
-Here's the command to reload the core module without reloading the whole notebook:
+Here's the command to reload the core module without reloading the whole notebook (that was useful while working on the external module `genev.py`):
 
 
 ```python
@@ -1153,7 +1163,7 @@ ev.evaluate(display=True);
 ```
 
     evaluation: 100.00%	(10 over 10)
-
+    
 
 
     <IPython.core.display.Javascript object>
@@ -1175,10 +1185,10 @@ callback();
     [#9 / gen 0]	score is 4000
     [#0 / gen 0]	score is 9223372036854775807
     (11,) (11,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_52_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_54_1.png)
 
 
 ### Evolve the population
@@ -1217,10 +1227,10 @@ ev.evaluate(display=True)
     [#13 / gen 1]	score is 9223372036854775807
     [#14 / gen 1]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_1.png)
 
 
     1 -------------------------- 
@@ -1237,10 +1247,10 @@ ev.evaluate(display=True)
     [#18 / gen 2]	score is 9223372036854775807
     [#19 / gen 2]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_3.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_3.png)
 
 
     2 -------------------------- 
@@ -1257,10 +1267,10 @@ ev.evaluate(display=True)
     [#23 / gen 3]	score is 9223372036854775807
     [#24 / gen 3]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_5.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_5.png)
 
 
     3 -------------------------- 
@@ -1277,10 +1287,10 @@ ev.evaluate(display=True)
     [#28 / gen 4]	score is 9223372036854775807
     [#29 / gen 4]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_7.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_7.png)
 
 
     4 -------------------------- 
@@ -1297,10 +1307,10 @@ ev.evaluate(display=True)
     [#33 / gen 5]	score is 9223372036854775807
     [#34 / gen 5]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_9.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_9.png)
 
 
     5 -------------------------- 
@@ -1317,10 +1327,10 @@ ev.evaluate(display=True)
     [#38 / gen 6]	score is 9223372036854775807
     [#39 / gen 6]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_11.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_11.png)
 
 
     6 -------------------------- 
@@ -1337,10 +1347,10 @@ ev.evaluate(display=True)
     [#43 / gen 7]	score is 9223372036854775807
     [#44 / gen 7]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_13.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_13.png)
 
 
     7 -------------------------- 
@@ -1357,10 +1367,10 @@ ev.evaluate(display=True)
     [#48 / gen 8]	score is 9223372036854775807
     [#49 / gen 8]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_15.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_15.png)
 
 
     8 -------------------------- 
@@ -1377,10 +1387,10 @@ ev.evaluate(display=True)
     [#53 / gen 9]	score is 9223372036854775807
     [#54 / gen 9]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_17.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_17.png)
 
 
     9 -------------------------- 
@@ -1397,14 +1407,14 @@ ev.evaluate(display=True)
     [#58 / gen 10]	score is 9223372036854775807
     [#59 / gen 10]	score is 9223372036854775807
     (9,) (9,)
+    
 
 
-
-![png](malware_genetic_analysis_files/malware_genetic_analysis_54_19.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_56_19.png)
 
 
     evaluation: 100.00%	(10 over 10)
-
+    
 
 
     <IPython.core.display.Javascript object>
@@ -1425,17 +1435,17 @@ print("\t\tvalidation_loss", elite.obj.validation_losses[-1])
 ```
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_56_0.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_58_0.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_56_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_58_1.png)
 
 
     [#36 / gen 6]	score is 1.0075670647512458
     		train_loss 0.042392105
     		validation_loss 0.051399972
-
+    
 
 Hyperparameters:
 
@@ -1541,8 +1551,8 @@ analyze_fitness_components(elite.obj)
 
 ### Analyze how parameters influences
 
-The visual analysis will help us to understand which values were generated and **how they are correlated to the success of the fitness score.**
-Each color represent a different model. Each point is bigger when its individual is from a recent generation: **hopefully we should see bigger circles on the left, where the score is good, than on the right**. The elite is shown by the star icon.
+The visual analysis will help us to understand which values were generated and how they are **correlated** to the success of the fitness score.
+Each color represent a different model. Each point is bigger when its individual is from a recent generation: hopefully we should see bigger circles on the left, where the score is good, than on the right. The elite is shown by the star icon.
 
 
 ```python
@@ -1550,27 +1560,27 @@ ev.visual_analysis()
 ```
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_0.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_0.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_1.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_2.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_2.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_3.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_3.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_4.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_4.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_65_5.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_66_5.png)
 
 
 As we can see, the `learning_rate` and the `lr_decay` are always a really low values and we could definitively lower the maximum pickable value. However, it is interesting to see that a value like the `hidden_size` has been tested through a lot of different possibilities.   
@@ -1588,7 +1598,7 @@ ALL_X_train, ALL_y_train, ALL_X_val, ALL_y_val, ALL_X_test, ALL_y_test = cross_v
     X_train.shape	 (4624, 5971) 	 y_train.shape	 (4624, 2)
     X_val.shape	 (1541, 5971) 	 y_val.shape	 (1541, 2)
     X_test.shape	 (1541, 5971) 	 y_test.shape	 (1541, 2)
-
+    
 
 Here are the *best* hyperparameters, according to the genetic evolution: 
 
@@ -1720,7 +1730,7 @@ train_losses, val_loss, metrics, t = m2.fit(ALL_X_train, ALL_y_train, ALL_X_val,
     epoch #980	loss: 0.0071 / 0.0268	acc: 0.97
     epoch #990	loss: 0.0070 / 0.0268	acc: 0.97
     epoch #1000	loss: 0.0070 / 0.0268	acc: 0.97
-
+    
 
 
     <IPython.core.display.Javascript object>
@@ -1734,11 +1744,11 @@ m2.status
 ```
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_73_0.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_74_0.png)
 
 
 
-![png](malware_genetic_analysis_files/malware_genetic_analysis_73_1.png)
+![png](malware_genetic_analysis_files/malware_genetic_analysis_74_1.png)
 
 
 
